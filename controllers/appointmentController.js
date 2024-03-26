@@ -1,5 +1,5 @@
 const appoinmentService = require('../services/appoinmentService');
-const FilterAppointmentRequest = require('../models/filterAppointmentRequest');
+const FilterAppointmentRequest = require('../models/filters/filterAppointmentRequest');
 
 exports.getAllAppointments = async (req, res) => {
   try {
@@ -11,3 +11,12 @@ exports.getAllAppointments = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.getResumeAppointments = async (req, res) => {
+  try {
+    const resumeAppointmentsResult = await appoinmentService.getResumeAppointments();
+    return res.status(200).json(resumeAppointmentsResult);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
