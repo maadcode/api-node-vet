@@ -1,7 +1,8 @@
 class FilterAppointmentRequest {
-    constructor(dateFrom, dateUntil) {
+    constructor(dateFrom, dateUntil, served) {
         this.dateFrom = dateFrom;
         this.dateUntil = dateUntil;
+        this.served = served;
     }
 }
 

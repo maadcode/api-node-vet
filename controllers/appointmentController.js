@@ -3,8 +3,8 @@ const FilterAppointmentRequest = require('../models/filters/filterAppointmentReq
 
 exports.getAllAppointments = async (req, res) => {
   try {
-    const { dateFrom, dateUntil } = req.query;
-    const filters = new FilterAppointmentRequest(dateFrom, dateUntil);
+    const { dateFrom, dateUntil, served } = req.query;
+    const filters = new FilterAppointmentRequest(dateFrom, dateUntil, served);
     const appoinmentsResult = await appoinmentService.getAllAppointments(filters);
     return res.status(200 ).json(appoinmentsResult);
   } catch (error) {

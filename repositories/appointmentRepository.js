@@ -18,6 +18,12 @@ exports.getAllAppointments = (filters) => {
       values.push(filters.dateUntil);
     }
 
+    if (filters.served) {
+      count++;
+      query += ` AND Served = $${count}`;
+      values.push(filters.served);
+    }
+
     clientDb.query(query, values, (error, result) => {
       if (error) {
         reject(error);
