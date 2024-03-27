@@ -5,8 +5,12 @@ exports.getAllAppointments = async (req, res) => {
   try {
     const { dateFrom, dateUntil, served } = req.query;
     const filters = new FilterAppointmentRequest(dateFrom, dateUntil, served);
-    const appoinmentsResult = await appoinmentService.getAllAppointments(filters);
-    return res.status(200 ).json(appoinmentsResult);
+    const result = await appoinmentService.getAllAppointments(filters);
+    if(result.code === 200 || result.code === 201) {
+      return res.status(result.code).json(result.data);
+    } else {
+      return res.status(result.code).json(result.errors[0]);
+    }
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -14,8 +18,26 @@ exports.getAllAppointments = async (req, res) => {
 
 exports.getResumeAppointments = async (req, res) => {
   try {
-    const resumeAppointmentsResult = await appoinmentService.getResumeAppointments();
-    return res.status(200).json(resumeAppointmentsResult);
+    const result = await appoinmentService.getResumeAppointments();
+    if(result.code === 200 || result.code === 201) {
+      return res.status(result.code).json(result.data);
+    } else {
+      return res.status(result.code).json(result.errors[0]);
+    }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+exports.notifyAppointment = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const result = await appoinmentService.sendNotification(appointmentId);
+    if(result.code === 200 || result.code === 201) {
+      return res.status(result.code).json(result.data);
+    } else {
+      return res.status(result.code).json(result.errors[0]);
+    }
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

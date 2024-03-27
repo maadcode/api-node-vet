@@ -71,3 +71,19 @@ exports.getAppointmentsForMonth = () => {
     });
   });
 }
+
+exports.getAppointmentById = (id) => {
+  const values = []
+  const query = `SELECT Id, AppointmentDate, Served, PetName, PetDocument, OwnerMail FROM Appointments WHERE Id = $1`;
+  values.push(id);
+
+  return new Promise((resolve, reject) => {
+    clientDb.query(query, values, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result.rows[0]);
+      }
+    });
+  });
+}
